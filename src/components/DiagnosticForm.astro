@@ -1,0 +1,68 @@
+---
+import { whatsappNumber } from '../data/demos.js';
+---
+
+<form class="diagnostic-form" id="lead-form">
+  <div class="field-grid">
+    <label>Nombre
+      <input name="nombre" autocomplete="name" required placeholder="Tu nombre completo" />
+    </label>
+    <label>Profesión o negocio
+      <select name="profesion" required>
+        <option value="">Selecciona una opción</option>
+        <option>Médico o clínica</option>
+        <option>Dentista</option>
+        <option>Abogado o firma</option>
+        <option>Centro de estética</option>
+        <option>Otro profesional</option>
+      </select>
+    </label>
+    <label>Ciudad
+      <input name="ciudad" autocomplete="address-level2" required placeholder="Ej. Cali" />
+    </label>
+    <label>WhatsApp
+      <input name="telefono" type="tel" autocomplete="tel" required placeholder="+57 300 000 0000" />
+    </label>
+  </div>
+  <label>Enlace de tu perfil de Google
+    <input name="google" type="url" placeholder="https://maps.google.com/..." />
+  </label>
+  <label class="consent">
+    <input name="consentimiento" type="checkbox" required />
+    <span>Acepto el <a href="/privacidad">tratamiento de mis datos</a> para recibir respuesta a esta solicitud.</span>
+  </label>
+  <button class="btn btn-primary" type="submit" data-track="diagnostico_enviado">Solicitar diagnóstico por WhatsApp</button>
+  <p class="form-note">Abriremos WhatsApp con tu información lista para enviar. No compartimos tus datos con terceros.</p>
+</form>
+
+<script define:vars={{ whatsappNumber }}>
+  const form = document.querySelector('#lead-form');
+  form?.addEventListener('submit', (event) => {
+    event.preventDefault();
+    const data = new FormData(form);
+    const lines = [
+      'Hola, quiero un diagnóstico gratuito de mi presencia digital.',
+      '',
+      `Nombre: ${data.get('nombre')}`,
+      `Profesión: ${data.get('profesion')}`,
+      `Ciudad: ${data.get('ciudad')}`,
+      `Teléfono: ${data.get('telefono')}`,
+      `Perfil de Google: ${data.get('google') || 'No lo tengo a mano'}`,
+    ];
+    window.open(`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(lines.join('\n'))}`, '_blank', 'noopener');
+  });
+</script>
+
+<style>
+  .diagnostic-form { background: #fff; border: 1px solid var(--line-soft); border-radius: var(--radius); padding: 28px; box-shadow: 0 24px 60px -30px rgba(20,43,61,.35); }
+  .field-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  label { display: flex; flex-direction: column; gap: 7px; margin-bottom: 16px; color: var(--ink); font-size: 13px; font-weight: 600; }
+  input, select { width: 100%; min-height: 46px; border: 1px solid var(--line); border-radius: 9px; background: #fff; color: var(--ink); padding: 10px 12px; font: inherit; }
+  input:focus, select:focus { outline: 3px solid rgba(31,111,84,.18); border-color: var(--emerald); }
+  .consent { flex-direction: row; align-items: flex-start; font-size: 12px; color: var(--ink-soft); font-weight: 400; }
+  .consent input { width: 18px; min-height: 18px; margin-top: 1px; }
+  .consent a { color: var(--emerald-dark); font-weight: 600; }
+  button { width: 100%; justify-content: center; }
+  .form-note { margin: 12px 0 0; color: var(--ink-soft); font-size: 11.5px; text-align: center; }
+  @media (max-width: 620px) { .field-grid { grid-template-columns: 1fr; gap: 0; } .diagnostic-form { padding: 22px; } }
+</style>

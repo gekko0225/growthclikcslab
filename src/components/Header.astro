@@ -1,0 +1,83 @@
+---
+import { waLink } from '../data/demos.js';
+---
+
+<header>
+  <div class="nav wrap">
+    <a href="/" class="logo">GrowthClicks<span>Lab</span></a>
+    <nav class="navlinks">
+      <a href="/#proceso">Cómo funciona</a>
+      <a href="/demos">Demos</a>
+      <a href="/#precios">Precios</a>
+      <a href="/#faq">Preguntas</a>
+    </nav>
+    <a class="nav-cta" href={waLink('Hola, quiero mi sitio web')} target="_blank" rel="noopener">
+      Escríbenos
+    </a>
+    <details class="mobile-menu">
+      <summary aria-label="Abrir menú"><span></span><span></span><span></span></summary>
+      <nav aria-label="Navegación móvil">
+        <a href="/#proceso">Cómo funciona</a>
+        <a href="/demos">Demos</a>
+        <a href="/#precios">Precios</a>
+        <a href="/#faq">Preguntas</a>
+        <a href="/#diagnostico">Diagnóstico gratuito</a>
+      </nav>
+    </details>
+  </div>
+</header>
+
+<style>
+  header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: rgba(246, 245, 240, 0.86);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--line-soft);
+  }
+  .nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 24px;
+  }
+  .logo {
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: 20px;
+    letter-spacing: -0.01em;
+    text-decoration: none;
+    color: var(--ink);
+  }
+  .logo span { color: var(--emerald-dark); }
+  .navlinks { display: flex; gap: 32px; font-size: 14.5px; font-weight: 500; }
+  .navlinks a { text-decoration: none; color: var(--ink-soft); transition: color 0.15s; }
+  .navlinks a:hover { color: var(--ink); }
+  .nav-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--navy);
+    color: #fff;
+    text-decoration: none;
+    padding: 10px 18px;
+    border-radius: 100px;
+    font-size: 14px;
+    font-weight: 600;
+    transition: background 0.15s;
+  }
+  .nav-cta:hover { background: var(--emerald-dark); }
+  .mobile-menu { display: none; position: relative; }
+  .mobile-menu summary { width: 42px; height: 42px; border: 1px solid var(--line); border-radius: 50%; display: grid; place-content: center; gap: 4px; cursor: pointer; list-style: none; }
+  .mobile-menu summary::-webkit-details-marker { display: none; }
+  .mobile-menu summary span { width: 17px; height: 2px; background: var(--ink); border-radius: 2px; }
+  .mobile-menu nav { position: absolute; right: 0; top: 50px; width: 235px; padding: 12px; border-radius: 14px; background: #fff; border: 1px solid var(--line-soft); box-shadow: 0 20px 50px rgba(20,43,61,.18); display: flex; flex-direction: column; }
+  .mobile-menu nav a { padding: 11px 12px; border-radius: 8px; text-decoration: none; color: var(--ink); font-size: 14px; }
+  .mobile-menu nav a:hover { background: var(--bg); }
+  @media (max-width: 760px) {
+    .navlinks { display: none; }
+    .nav-cta { display: none; }
+    .mobile-menu { display: block; }
+  }
+</style>

@@ -1,0 +1,87 @@
+---
+import Layout from './Layout.astro';
+import { waLink } from '../data/demos.js';
+
+interface Props {
+  title: string;
+  niche: string;
+  business: string;
+  color: string;
+  colorDark: string;
+}
+
+const { title, niche, business, color, colorDark } = Astro.props;
+const backMessage = `Vi la demo de ${niche} y quiero algo así para mi negocio`;
+---
+
+<Layout
+  title={title}
+  description={`Demostración conceptual de sitio web para ${niche}, creada por GrowthClicksLab.`}
+  noindex
+>
+  <div style={`--niche-color: ${color}; --niche-color-dark: ${colorDark};`} class="demo-shell">
+    <div class="demo-banner">
+      <div class="wrap demo-banner-inner">
+        <a href="/demos" class="demo-back">← Todas las demos</a>
+        <span class="demo-banner-label">
+          <strong>Ejemplo conceptual:</strong> nombres, reseñas y datos son ficticios — creado por
+          <a href="/" class="demo-brand">GrowthClicksLab</a>
+        </span>
+        <a class="demo-banner-cta" href={waLink(backMessage)} target="_blank" rel="noopener">
+          Quiero un sitio así →
+        </a>
+      </div>
+    </div>
+    <slot />
+  </div>
+</Layout>
+
+<style>
+  .demo-shell {
+    --niche-color: #1F6F54;
+    --niche-color-dark: #164F3D;
+  }
+  .demo-banner {
+    background: #16211B;
+    color: #fff;
+    font-size: 13px;
+    padding: 10px 0;
+    position: relative;
+    z-index: 100;
+  }
+  .demo-banner-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .demo-back {
+    text-decoration: none;
+    color: rgba(255, 255, 255, 0.75);
+    font-weight: 500;
+  }
+  .demo-back:hover { color: #fff; }
+  .demo-banner-label {
+    color: rgba(255, 255, 255, 0.75);
+    text-align: center;
+  }
+  .demo-brand {
+    color: var(--amber, #e2a33d);
+    text-decoration: none;
+    font-weight: 700;
+  }
+  .demo-banner-cta {
+    background: var(--niche-color);
+    color: #fff;
+    text-decoration: none;
+    font-weight: 700;
+    padding: 7px 14px;
+    border-radius: 100px;
+    font-size: 12.5px;
+    white-space: nowrap;
+  }
+  @media (max-width: 700px) {
+    .demo-banner-inner { justify-content: center; text-align: center; }
+  }
+</style>

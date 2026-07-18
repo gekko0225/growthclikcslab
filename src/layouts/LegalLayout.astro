@@ -1,0 +1,32 @@
+---
+import Layout from './Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+interface Props { title: string; description: string; updated: string; }
+const { title, description, updated } = Astro.props;
+---
+
+<Layout title={`${title} — GrowthClicksLab`} description={description}>
+  <Header />
+  <main id="contenido" class="legal">
+    <div class="wrap">
+      <p class="eyebrow">Información legal</p>
+      <h1>{title}</h1>
+      <p class="updated">Última actualización: {updated}</p>
+      <article><slot /></article>
+    </div>
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  .legal { padding: 80px 0; }
+  .legal .wrap { max-width: 820px; }
+  h1 { font-size: clamp(34px, 5vw, 52px); margin: 16px 0 8px; color: var(--navy); }
+  .updated { color: var(--ink-soft); font-size: 13px; margin-bottom: 42px; }
+  article :global(h2) { font-size: 24px; color: var(--navy); margin: 34px 0 12px; }
+  article :global(p), article :global(li) { color: var(--ink-soft); line-height: 1.75; margin-bottom: 12px; }
+  article :global(ul) { padding-left: 22px; }
+  article :global(a) { color: var(--emerald-dark); font-weight: 600; }
+</style>

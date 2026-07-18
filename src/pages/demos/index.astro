@@ -1,0 +1,43 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import WhatsAppButton from '../../components/WhatsAppButton.astro';
+import DemoTeaserCard from '../../components/DemoTeaserCard.astro';
+import { demos } from '../../data/demos.js';
+---
+
+<Layout title="Demos por especialidad — GrowthClicksLab" description="Sitios conceptuales de ejemplo para médicos, dentistas, abogados y centros de estética." noindex>
+  <Header />
+
+  <main id="contenido">
+    <section class="intro">
+      <div class="wrap">
+        <span class="eyebrow">Antes de contratar, míralo</span>
+        <h1>Elige tu especialidad y entra al sitio completo</h1>
+        <p>
+          Cada demo es un ejemplo conceptual navegable con nombres y datos ficticios. Úsala para
+          explorar la estructura y la experiencia que podríamos adaptar a tu negocio.
+        </p>
+      </div>
+    </section>
+
+    <section class="grid-section">
+      <div class="wrap demo-grid">
+        {demos.map((d) => <DemoTeaserCard {...d} />)}
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+  <WhatsAppButton message="Hola, vi las demos y quiero cotizar mi sitio" />
+</Layout>
+
+<style>
+  .intro { padding: 64px 0 40px; text-align: center; }
+  .intro h1 { font-size: clamp(28px, 4vw, 42px); margin: 14px 0 16px; color: var(--navy); max-width: 700px; margin-inline: auto; }
+  .intro p { color: var(--ink-soft); font-size: 16px; max-width: 520px; margin: 0 auto; }
+  .grid-section { padding: 0 0 88px; }
+  .demo-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 26px; }
+  @media (max-width: 820px) { .demo-grid { grid-template-columns: 1fr; } }
+</style>

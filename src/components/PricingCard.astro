@@ -1,0 +1,77 @@
+---
+import { waLink } from '../data/demos.js';
+
+interface Props {
+  name: string;
+  desc: string;
+  price: string;
+  features: string[];
+  featured?: boolean;
+}
+
+const { name, desc, price, features, featured = false } = Astro.props;
+const check = 'M20 6L9 17l-5-5';
+---
+
+<div class:list={['price-card', { featured }]}>
+  {featured && <span class="featured-tag">Más elegido</span>}
+  <div class="price-name">{name}</div>
+  <div class="price-desc">{desc}</div>
+  <div class="price-num">Desde<b>{price}</b></div>
+  <ul class="price-list">
+    {features.map((f) => (
+      <li>
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none">
+          <path d={check} stroke-width="2.4" stroke-linecap="round" stroke="currentColor" />
+        </svg>
+        {f}
+      </li>
+    ))}
+  </ul>
+  <a
+    class:list={['btn', featured ? 'btn-primary' : 'btn-ghost']}
+    href={waLink(`Hola, quiero el paquete ${name}`)}
+    target="_blank"
+    rel="noopener"
+  >
+    Elegir {name}
+  </a>
+</div>
+
+<style>
+  .price-card {
+    background: var(--card);
+    border: 1px solid var(--line-soft);
+    border-radius: var(--radius);
+    padding: 34px 28px;
+    position: relative;
+  }
+  .price-card.featured {
+    border-color: var(--emerald-dark);
+    box-shadow: 0 20px 40px -20px rgba(31, 111, 84, 0.35);
+  }
+  .featured-tag {
+    position: absolute;
+    top: -13px;
+    left: 28px;
+    background: var(--emerald-dark);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 5px 12px;
+    border-radius: 100px;
+    font-family: 'IBM Plex Mono', monospace;
+    letter-spacing: 0.04em;
+  }
+  .price-name { font-family: 'Fraunces', serif; font-size: 20px; color: var(--navy); margin-bottom: 6px; }
+  .price-desc { font-size: 13.5px; color: var(--ink-soft); margin-bottom: 18px; min-height: 36px; }
+  .price-num { font-family: 'IBM Plex Mono', monospace; font-size: 15px; color: var(--ink-soft); margin-bottom: 2px; }
+  .price-num b {
+    font-size: 32px; color: var(--navy); font-weight: 600;
+    display: block; font-family: 'Fraunces', serif;
+  }
+  .price-list { list-style: none; margin: 22px 0 26px; display: flex; flex-direction: column; gap: 11px; }
+  .price-list li { font-size: 14px; color: var(--ink-soft); display: flex; gap: 9px; align-items: flex-start; }
+  .price-list li svg { flex-shrink: 0; margin-top: 3px; color: var(--emerald-dark); }
+  .price-card :global(.btn) { width: 100%; justify-content: center; }
+</style>

@@ -1,0 +1,97 @@
+---
+interface Props {
+  slug: string;
+  niche: string;
+  business: string;
+  tagline: string;
+  description: string;
+  gradient: string;
+  rating: string;
+}
+
+const { slug, niche, business, tagline, description, gradient, rating } = Astro.props;
+---
+
+<a class="demo-card" href={`/demos/${slug}`}>
+  <div class="demo-window">
+    <div class="browser-bar"><i></i><i></i><i></i></div>
+  </div>
+  <div class="demo-preview" style={`background:${gradient}`}>
+    <div class="mock-nav">
+      <div class="mock-logo"></div>
+      <div class="mock-btn-pill">Ver sitio</div>
+    </div>
+    <div class="mock-body">
+      <div class="mock-line w1">{business}</div>
+      <div class="mock-line w2"></div>
+      <span class="mock-cta">Entrar a la demo →</span>
+    </div>
+    <div class="rating"><span class="stars">★★★★★</span> {rating}</div>
+  </div>
+  <div class="demo-body">
+    <span class="demo-tag">{niche}</span>
+    <h4>{tagline}</h4>
+    <p>{description}</p>
+  </div>
+</a>
+
+<style>
+  .demo-card {
+    background: var(--card);
+    border: 1px solid var(--line-soft);
+    border-radius: var(--radius);
+    overflow: hidden;
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+  .demo-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 20px 40px -24px rgba(20, 43, 61, 0.35);
+  }
+  .browser-bar {
+    background: #edeee7;
+    padding: 8px 12px;
+    display: flex;
+    gap: 5px;
+    border-bottom: 1px solid var(--line-soft);
+  }
+  .browser-bar i {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: #d8d8d0; display: inline-block;
+  }
+  .demo-preview { height: 130px; margin: 0 24px 20px; border-radius: 10px; position: relative; overflow: hidden; top: -1px; }
+  .mock-nav {
+    position: absolute; top: 0; left: 0; right: 0;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 10px 14px; border-bottom: 1px solid rgba(255, 255, 255, 0.14);
+  }
+  .mock-logo { width: 44px; height: 6px; border-radius: 3px; background: rgba(255, 255, 255, 0.85); }
+  .mock-btn-pill {
+    padding: 3px 9px; border-radius: 100px; font-family: 'IBM Plex Mono', monospace;
+    font-size: 8px; font-weight: 700; background: var(--amber); color: #20140a;
+  }
+  .mock-body { position: absolute; left: 14px; right: 14px; top: 38px; }
+  .mock-line { height: 8px; border-radius: 3px; background: rgba(255, 255, 255, 0.9); margin-bottom: 7px; }
+  .mock-line.w1 { width: 70%; }
+  .mock-line.w2 { width: 48%; background: rgba(255, 255, 255, 0.55); height: 6px; }
+  .mock-cta {
+    display: inline-block; margin-top: 6px; padding: 5px 12px; border-radius: 6px;
+    background: rgba(255, 255, 255, 0.95); color: #16211b; font-size: 9px; font-weight: 700;
+    font-family: 'IBM Plex Mono', monospace;
+  }
+  .rating {
+    position: absolute; bottom: 10px; left: 10px; background: rgba(255, 255, 255, 0.92);
+    padding: 5px 10px; border-radius: 8px; font-size: 11px; font-weight: 700; color: var(--navy);
+    display: flex; align-items: center; gap: 5px;
+  }
+  .stars { color: var(--amber); font-size: 10px; }
+  .demo-body { padding: 0 24px 24px; }
+  .demo-tag {
+    font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; text-transform: uppercase;
+    letter-spacing: 0.1em; font-weight: 600; color: var(--emerald-dark);
+  }
+  .demo-body h4 { font-family: 'Fraunces', serif; font-size: 18px; margin: 8px 0 6px; color: var(--navy); }
+  .demo-body p { font-size: 13.5px; color: var(--ink-soft); margin-bottom: 0; }
+</style>

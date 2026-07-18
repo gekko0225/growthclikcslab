@@ -1,0 +1,95 @@
+---
+import DemoLayout from '../layouts/DemoLayout.astro';
+import { waLink } from '../data/demos.js';
+
+interface Service { title: string; text: string; meta?: string; }
+interface Props {
+  variant: 'medical' | 'dental' | 'legal' | 'aesthetic';
+  niche: string;
+  business: string;
+  title: string;
+  eyebrow: string;
+  headline: string;
+  intro: string;
+  image: string;
+  color: string;
+  colorDark: string;
+  cta: string;
+  services: Service[];
+  stats: [string,string][];
+  testimonial: string;
+  testimonialAuthor: string;
+  location: string;
+  hours: string;
+}
+const p = Astro.props;
+const message = `Vi la demo de ${p.business} y quiero un sitio con este nivel para mi negocio`;
+---
+
+<DemoLayout title={p.title} niche={p.niche} business={p.business} color={p.color} colorDark={p.colorDark}>
+  <main id="contenido" class:list={['real-site', p.variant]}>
+    <nav class="business-nav">
+      <a class="business-logo" href="#inicio">{p.business}</a>
+      <div class="business-links">
+        <a href="#servicios">Servicios</a><a href="#experiencia">Nosotros</a><a href="#opiniones">Opiniones</a><a href="#contacto">Contacto</a>
+      </div>
+      <a class="nav-action" href={waLink(message)} target="_blank" rel="noopener">{p.cta}</a>
+    </nav>
+
+    <header class="business-hero" id="inicio">
+      <img src={p.image} alt={`Interior y profesional de ${p.business}`} width="1952" height="976" />
+      <div class="hero-shade"></div>
+      <div class="hero-copy">
+        <span>{p.eyebrow}</span>
+        <h1>{p.headline}</h1>
+        <p>{p.intro}</p>
+        <div class="hero-actions">
+          <a class="primary-action" href={waLink(message)} target="_blank" rel="noopener">{p.cta}</a>
+          <a class="quiet-action" href="#servicios">Conocer servicios</a>
+        </div>
+      </div>
+      <aside class="review-chip"><b>4.9</b><span>★★★★★</span><small>Opiniones en Google</small></aside>
+    </header>
+
+    <section class="quick-info">
+      {p.stats.map(([number,label]) => <div><strong>{number}</strong><span>{label}</span></div>)}
+    </section>
+
+    <section id="servicios" class="services-section">
+      <div class="section-intro"><span>Servicios</span><h2>{p.variant === 'legal' ? 'Asesoría que empieza por entender tu caso' : p.variant === 'aesthetic' ? 'Protocolos pensados para tu piel' : p.variant === 'dental' ? 'Todo lo que tu sonrisa necesita' : 'Atención integral, sin perder lo humano'}</h2></div>
+      <div class="service-grid">
+        {p.services.map((service,index) => <article><small>0{index+1}</small><h3>{service.title}</h3><p>{service.text}</p>{service.meta && <b>{service.meta}</b>}</article>)}
+      </div>
+    </section>
+
+    <section id="experiencia" class="story-section">
+      <div class="story-card">
+        <span>{p.variant === 'legal' ? 'Nuestro criterio' : 'Nuestra forma de atender'}</span>
+        <h2>{p.variant === 'medical' ? 'Escuchar también hace parte del diagnóstico.' : p.variant === 'dental' ? 'Tecnología precisa. Trato cercano.' : p.variant === 'legal' ? 'Claridad para decidir. Estrategia para avanzar.' : 'Resultados naturales, decisiones informadas.'}</h2>
+        <p>Esta sección permite contar la filosofía del negocio, presentar al equipo y explicar por qué sus clientes lo recomiendan.</p>
+      </div>
+      <div class="story-list">
+        <div><b>01</b><span>Valoración personalizada</span></div>
+        <div><b>02</b><span>Plan claro antes de comenzar</span></div>
+        <div><b>03</b><span>Seguimiento después del servicio</span></div>
+      </div>
+    </section>
+
+    <section id="opiniones" class="testimonial-section">
+      <span class="quote">“</span>
+      <blockquote>{p.testimonial}</blockquote>
+      <p>{p.testimonialAuthor} · Reseña ilustrativa</p>
+    </section>
+
+    <section id="contacto" class="contact-section">
+      <div><span>Agenda y ubicación</span><h2>Estamos listos para atenderte</h2><p>{p.location}<br />{p.hours}</p></div>
+      <div class="contact-card"><strong>{p.cta}</strong><p>Cuéntanos brevemente qué necesitas y te orientaremos sobre el siguiente paso.</p><a href={waLink(message)} target="_blank" rel="noopener">Escribir por WhatsApp →</a></div>
+    </section>
+  </main>
+</DemoLayout>
+
+<style>
+  .real-site{--accent:var(--niche-color);--deep:var(--niche-color-dark);background:#fbfaf7;color:#18201d;font-family:'Inter',sans-serif}.business-nav{height:76px;padding:0 max(24px,calc((100vw - 1160px)/2));display:flex;align-items:center;justify-content:space-between;gap:28px;background:#fff;position:sticky;top:0;z-index:20;border-bottom:1px solid #e9e8e3}.business-logo{font-family:'Fraunces',serif;font-size:20px;font-weight:600;text-decoration:none;color:var(--deep)}.business-links{display:flex;gap:28px}.business-links a{font-size:13px;text-decoration:none;color:#53605b}.nav-action,.primary-action{background:var(--accent);color:#fff;text-decoration:none;padding:12px 19px;border-radius:4px;font-weight:700;font-size:13px}.business-hero{height:min(720px,75vh);min-height:580px;position:relative;overflow:hidden}.business-hero>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}.hero-shade{position:absolute;inset:0;background:linear-gradient(90deg,rgba(6,17,14,.82) 0%,rgba(6,17,14,.42) 42%,transparent 70%)}.hero-copy{position:relative;z-index:2;width:min(1160px,calc(100% - 48px));margin:auto;padding-top:110px;color:#fff}.hero-copy>span,.section-intro>span,.story-card>span,.contact-section>div>span{font-size:11px;letter-spacing:.16em;text-transform:uppercase;font-weight:700;color:#bcd8ce}.hero-copy h1{font-family:'Fraunces',serif;font-size:clamp(43px,6.4vw,78px);line-height:1;max-width:700px;margin:18px 0}.hero-copy p{max-width:540px;color:#e6ece9;font-size:17px;line-height:1.65}.hero-actions{display:flex;gap:18px;align-items:center;margin-top:30px}.quiet-action{color:#fff;text-underline-offset:5px;font-size:13px}.review-chip{position:absolute;right:max(24px,calc((100vw - 1160px)/2));bottom:34px;z-index:2;background:#fff;color:#1b2722;padding:18px 22px;border-radius:10px;display:grid;grid-template-columns:auto auto;gap:2px 12px;box-shadow:0 18px 50px rgba(0,0,0,.18)}.review-chip b{font:600 28px 'Fraunces',serif}.review-chip span{color:#e2a33d;letter-spacing:2px}.review-chip small{grid-column:1/-1;color:#758079}.quick-info{display:grid;grid-template-columns:repeat(3,1fr);width:min(1160px,calc(100% - 48px));margin:-1px auto 0;background:var(--deep);color:#fff}.quick-info div{padding:25px 32px;display:flex;align-items:center;gap:14px;border-right:1px solid #ffffff1f}.quick-info strong{font:500 27px 'Fraunces',serif}.quick-info span{font-size:12px;color:#d4dfda}.services-section,.story-section,.contact-section{width:min(1160px,calc(100% - 48px));margin:auto;padding:100px 0}.section-intro{max-width:650px;margin-bottom:48px}.section-intro>span,.story-card>span,.contact-section>div>span{color:var(--accent)}.section-intro h2,.story-card h2,.contact-section h2{font:500 clamp(32px,4.5vw,52px)/1.08 'Fraunces',serif;color:var(--deep);margin:14px 0}.service-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.service-grid article{background:#fff;border:1px solid #e4e5df;padding:30px;min-height:250px}.service-grid small{color:var(--accent);font-weight:700}.service-grid h3{font:500 23px 'Fraunces',serif;margin:42px 0 12px;color:var(--deep)}.service-grid p{font-size:14px;color:#627069;line-height:1.65}.service-grid b{display:block;margin-top:20px;font-size:12px;color:var(--accent)}.story-section{display:grid;grid-template-columns:1.2fr .8fr;gap:90px;align-items:end;border-top:1px solid #dedfd8}.story-card p{color:#637069;line-height:1.7;max-width:600px}.story-list{display:grid}.story-list div{padding:20px 0;border-bottom:1px solid #dfe1da;display:flex;gap:20px}.story-list b{color:var(--accent)}.testimonial-section{background:var(--deep);color:#fff;text-align:center;padding:100px 24px}.quote{font:80px 'Fraunces',serif;color:var(--accent);line-height:.5}.testimonial-section blockquote{font:500 clamp(28px,4vw,46px)/1.25 'Fraunces',serif;max-width:900px;margin:24px auto}.testimonial-section p{color:#bfcac5;font-size:12px}.contact-section{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}.contact-section>div>p{color:#67736e;line-height:1.7}.contact-card{background:#fff;border:1px solid #e0e1dc;padding:36px}.contact-card strong{font:500 25px 'Fraunces',serif;color:var(--deep)}.contact-card a{display:inline-block;margin-top:18px;color:var(--accent);font-weight:700;text-decoration:none}
+  .dental{background:#f4f8fb}.dental .business-hero{background:#dbeaf4}.dental .hero-shade{background:linear-gradient(270deg,rgba(7,31,52,.88),rgba(7,31,52,.25) 55%,transparent 75%)}.dental .hero-copy{padding-left:52%;}.dental .service-grid{grid-template-columns:repeat(2,1fr)}.dental .service-grid article{border-radius:18px}.legal{background:#f4f0e8}.legal .business-nav{background:#211d19;color:#fff;border:0}.legal .business-logo,.legal .business-links a{color:#fff}.legal .business-hero{height:760px}.legal .hero-shade{background:linear-gradient(90deg,rgba(14,12,10,.82),rgba(14,12,10,.3) 60%,transparent)}.legal .nav-action,.legal .primary-action{border-radius:0;background:#a9875e}.legal .service-grid article{background:transparent;border-width:0 0 1px;border-color:#cfc4b3}.legal .testimonial-section{background:#211d19}.aesthetic{background:#f8f1e8}.aesthetic .business-hero{height:700px}.aesthetic .hero-shade{background:linear-gradient(270deg,rgba(80,51,35,.75),rgba(80,51,35,.08) 65%,transparent)}.aesthetic .hero-copy{padding-left:55%;}.aesthetic .review-chip{left:max(24px,calc((100vw - 1160px)/2));right:auto}.aesthetic .nav-action,.aesthetic .primary-action{border-radius:100px}.aesthetic .service-grid article{border-radius:70px 70px 12px 12px;padding-top:45px}.aesthetic .testimonial-section{background:#5b4537}
+  @media(max-width:800px){.business-links{display:none}.business-hero{min-height:660px}.hero-copy,.dental .hero-copy,.aesthetic .hero-copy{padding:80px 0 0;width:calc(100% - 36px)}.hero-shade,.dental .hero-shade,.aesthetic .hero-shade{background:linear-gradient(0deg,rgba(10,22,18,.9),rgba(10,22,18,.18))}.hero-copy h1{font-size:45px}.review-chip{right:18px;left:auto!important}.quick-info,.service-grid,.dental .service-grid,.story-section,.contact-section{grid-template-columns:1fr}.quick-info div{border-right:0;border-bottom:1px solid #ffffff1f}.services-section,.story-section,.contact-section{padding:70px 0}.story-section,.contact-section{gap:38px}.business-nav{padding:0 18px}.business-logo{font-size:16px}.nav-action{padding:10px 12px}}
+</style>

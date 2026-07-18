@@ -1,0 +1,70 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from './Header.astro';
+import Footer from './Footer.astro';
+import DiagnosticForm from './DiagnosticForm.astro';
+
+interface Props {
+  title: string;
+  profession: string;
+  plural: string;
+  description: string;
+  benefits: string[];
+  path: string;
+}
+const { title, profession, plural, description, benefits, path } = Astro.props;
+---
+
+<Layout title={title} description={description} canonicalPath={path}>
+  <Header />
+  <main id="contenido">
+    <section class="niche-hero">
+      <div class="wrap niche-grid">
+        <div>
+          <span class="eyebrow">Sitios web para {plural}</span>
+          <h1>Convierte tu reputación en Google en nuevas consultas</h1>
+          <p>{description}</p>
+          <a class="btn btn-primary" href="#diagnostico" data-track={`nicho_${profession}`}>Solicitar diagnóstico gratuito</a>
+        </div>
+        <aside>
+          <span class="rating">★★★★★ <b>4.9</b></span>
+          <h2>Tu experiencia ya genera confianza</h2>
+          <p>Una web profesional le da a cada reseña un lugar donde convertirse en una conversación.</p>
+        </aside>
+      </div>
+    </section>
+    <section>
+      <div class="wrap">
+        <div class="section-head"><span class="eyebrow">Lo que construimos</span><h2>Una web pensada para la forma en que te buscan</h2></div>
+        <div class="benefits">{benefits.map((benefit) => <article><span>✓</span><p>{benefit}</p></article>)}</div>
+      </div>
+    </section>
+    <section id="diagnostico" class="diagnostic">
+      <div class="wrap niche-grid">
+        <div><span class="eyebrow">Primer paso sin costo</span><h2>Revisemos tu presencia digital</h2><p>Cuéntanos lo básico sobre tu práctica y te mostraremos oportunidades concretas de mejora.</p></div>
+        <DiagnosticForm />
+      </div>
+    </section>
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  .niche-hero { padding: 96px 0; }
+  .niche-grid { display: grid; grid-template-columns: 1.05fr .95fr; gap: 64px; align-items: center; }
+  h1 { color: var(--navy); font-size: clamp(38px, 5.5vw, 62px); margin: 18px 0; }
+  .niche-hero p { color: var(--ink-soft); font-size: 18px; max-width: 600px; margin-bottom: 28px; }
+  aside { background: var(--navy); color: #fff; border-radius: 22px; padding: 44px; }
+  aside h2 { font-size: 30px; margin: 20px 0 12px; }
+  aside p { color: #c8d4cf!important; font-size: 15px!important; margin: 0!important; }
+  .rating { color: var(--amber); letter-spacing: 2px; }
+  .rating b { color: #fff; margin-left: 8px; }
+  .benefits { display: grid; grid-template-columns: repeat(2,1fr); gap: 18px; }
+  .benefits article { display: flex; gap: 14px; background: #fff; border: 1px solid var(--line-soft); border-radius: 12px; padding: 24px; }
+  .benefits span { color: var(--emerald-dark); font-weight: 800; }
+  .diagnostic { background: var(--navy); color: #fff; }
+  .diagnostic .eyebrow { color: #9FD9C4; }
+  .diagnostic h2 { font-size: 38px; margin: 16px 0; }
+  .diagnostic p { color: #c8d4cf; }
+  @media(max-width:820px){.niche-grid{grid-template-columns:1fr}.benefits{grid-template-columns:1fr}}
+</style>
